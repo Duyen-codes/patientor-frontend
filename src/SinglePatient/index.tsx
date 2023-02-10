@@ -10,7 +10,7 @@ import FemaleIcon from '@mui/icons-material/Female'
 import MaleIcon from '@mui/icons-material/Male'
 
 const SinglePatient = () => {
-  const [{ patient }, dispatch] = useStateValue()
+  const [{ patient, diagnoses }, dispatch] = useStateValue()
 
   const { id } = useParams<{ id: string }>()
 
@@ -27,10 +27,6 @@ const SinglePatient = () => {
 
           const { data: singlePatientFromApi } = response
 
-          //   dispatch({
-          //     type: 'SET_SINGLE_PATIENT',
-          //     payload: singlePatientFromApi,
-          //   })
           dispatch(setSinglePatient(singlePatientFromApi))
         } catch (error) {
           console.error(error)
@@ -51,6 +47,23 @@ const SinglePatient = () => {
       <p>{patient.gender === 'female' && <FemaleIcon />}</p>
       <p>ssn: {patient.ssn}</p>
       <p>occupation: {patient.occupation}</p>
+      <h3>entries</h3>
+      <div>
+        {patient.entries.map((entry) => {
+          return (
+            <div key={entry.id}>
+              {entry.description}
+              <ul>
+                {entry.diagnosisCodes?.map((code) => (
+                  <li key={code}>
+                    {code} {diagnoses[code].name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }
