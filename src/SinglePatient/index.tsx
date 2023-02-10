@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 
 import { apiBaseUrl } from '../constants'
-import { useStateValue } from '../state'
+import { setSinglePatient, useStateValue } from '../state'
 import { useParams } from 'react-router-dom'
 import { Patient } from '../types'
 
@@ -27,10 +27,11 @@ const SinglePatient = () => {
 
           const { data: singlePatientFromApi } = response
 
-          dispatch({
-            type: 'SET_SINGLE_PATIENT',
-            payload: singlePatientFromApi,
-          })
+          //   dispatch({
+          //     type: 'SET_SINGLE_PATIENT',
+          //     payload: singlePatientFromApi,
+          //   })
+          dispatch(setSinglePatient(singlePatientFromApi))
         } catch (error) {
           console.error(error)
         }
