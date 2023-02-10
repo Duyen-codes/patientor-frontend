@@ -22,7 +22,6 @@ const App = () => {
           `${apiBaseUrl}/patients`,
         )
 
-        // dispatch({ type: 'SET_PATIENT_LIST', payload: patientListFromApi })
         dispatch(setPatientList(patientListFromApi))
       } catch (e) {
         console.error(e)
@@ -34,7 +33,7 @@ const App = () => {
         const { data: diagnoseListFromApi } = await axios.get<Diagnosis[]>(
           `${apiBaseUrl}/diagnoses`,
         )
-        console.log(diagnoseListFromApi)
+
         dispatch(setDiagnoseList(diagnoseListFromApi))
       } catch (error) {
         console.error(error)
