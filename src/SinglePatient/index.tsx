@@ -6,27 +6,38 @@ import { useStateValue } from '../state'
 import { useParams } from 'react-router-dom'
 import { Patient } from '../types'
 
+import FemaleIcon from '@mui/icons-material/Female'
+import MaleIcon from '@mui/icons-material/Male'
+
 const SinglePatient = () => {
-  console.log('singlePatient')
   const [{ patient }, dispatch] = useStateValue()
 
   const { id } = useParams<{ id: string }>()
 
   React.useEffect(() => {
-    const fetchSinglePatient = async () => {
-      try {
-        const { data: singlePatientFromApi } = await axios.get<Patient>(
-          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-          `${apiBaseUrl}/patients/${id}`,
-        )
-
-        dispatch({ type: 'SET_SINGLE_PATIENT', payload: singlePatientFromApi })
-      } catch (error) {
-        console.error(error)
+    if (id) {
+      if (patient && patient.id === id) {
+        return
       }
-    }
+      const fetchSinglePatient = async () => {
+        try {
+          const response = await axios.get<Patient>(
+            `${apiBaseUrl}/patients/${id}`,
+          )
 
-    void fetchSinglePatient()
+          const { data: singlePatientFromApi } = response
+
+          dispatch({
+            type: 'SET_SINGLE_PATIENT',
+            payload: singlePatientFromApi,
+          })
+        } catch (error) {
+          console.error(error)
+        }
+      }
+
+      void fetchSinglePatient()
+    }
   }, [dispatch, id])
 
   if (!patient) {
@@ -34,8 +45,11 @@ const SinglePatient = () => {
   }
   return (
     <div>
-      Single patient info
-      {patient.name}
+      <h2>{patient.name}</h2>
+      <p>{patient.gender === 'male' && <MaleIcon />}</p>
+      <p>{patient.gender === 'female' && <FemaleIcon />}</p>
+      <p>ssn: {patient.ssn}</p>
+      <p>occupation: {patient.occupation}</p>
     </div>
   )
 }
