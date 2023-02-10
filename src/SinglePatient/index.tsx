@@ -8,9 +8,10 @@ import { Patient } from '../types'
 
 import FemaleIcon from '@mui/icons-material/Female'
 import MaleIcon from '@mui/icons-material/Male'
+import EntryDetails from '../EntryDetails'
 
 const SinglePatient = () => {
-  const [{ patient, diagnoses }, dispatch] = useStateValue()
+  const [{ patient }, dispatch] = useStateValue()
 
   const { id } = useParams<{ id: string }>()
 
@@ -49,20 +50,9 @@ const SinglePatient = () => {
       <p>occupation: {patient.occupation}</p>
       <h3>entries</h3>
       <div>
-        {patient.entries.map((entry) => {
-          return (
-            <div key={entry.id}>
-              {entry.description}
-              <ul>
-                {entry.diagnosisCodes?.map((code) => (
-                  <li key={code}>
-                    {code} {diagnoses[code].name}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )
-        })}
+        {patient.entries.map((entry) => (
+          <EntryDetails key={entry.id} entry={entry} />
+        ))}
       </div>
     </div>
   )
