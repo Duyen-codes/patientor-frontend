@@ -45,8 +45,6 @@ const PatientListPage = () => {
       }
     }
   }
-
-  console.log('patientList')
   return (
     <div className="App">
       <Box>
