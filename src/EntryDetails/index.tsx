@@ -6,6 +6,7 @@ const assertNever = (value: never): never => {
     `Unhandled discriminated union member: ${JSON.stringify(value)}`,
   )
 }
+
 const EntryDetails: React.FC<{ entry: Entry }> = ({ entry }) => {
   switch (entry.type) {
     case 'Hospital':
@@ -13,7 +14,6 @@ const EntryDetails: React.FC<{ entry: Entry }> = ({ entry }) => {
         <div>
           {entry.date}
           {entry.description}
-
           <p> diagnose by {entry.specialist}</p>
         </div>
       )
@@ -33,7 +33,6 @@ const EntryDetails: React.FC<{ entry: Entry }> = ({ entry }) => {
           {entry.date}
           {entry.employerName}
           {entry.description}
-
           <p> diagnose by {entry.specialist}</p>
         </div>
       )
